@@ -4,20 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,16 +40,17 @@ fun MainScreen() {
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                // TextField for user input
                 UserInput(
-                    name = name,
-                    onNameChange = { name = it }
+                    name = username,
+                    onNameChange = { username = it }
                 )
 
+                // Submit button
                 Button(
                     onClick = {
-                        if (username.isNotBlank()) {
-                            showGreeting = false
-                        }
+                        // Show greeting if the username is not blank
+                        showGreeting = username.isNotBlank()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -66,14 +59,14 @@ fun MainScreen() {
                     Text("Submit")
                 }
 
+                // Greeting message
                 if (showGreeting) {
-                    Greeeting(
+                    Greeting(
                         name = username,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
                     )
-
                 }
             }
         }
@@ -95,8 +88,8 @@ fun UserInput(name: String, onNameChange: (String) -> Unit, modifier: Modifier =
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $username!, Welcome to InF2007!",
-        modifier = Modifier
+        text = "Hello $name!, Welcome to INF2007!",
+        modifier = modifier
             .fillMaxWidth()
             .testTag("greeting")
     )
